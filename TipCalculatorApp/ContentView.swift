@@ -12,7 +12,7 @@ struct ContentView: View {
     // State variables
     @State var billAmount: Double = 0.0
     @State var tipPercentage: Double = 0.0
-    @State var numberOfPeople: Double = 0.0
+    @State var numberOfPeople: Double = 1.0
     @State var showResults: Bool = false
 
     // Computed variables
@@ -21,49 +21,90 @@ struct ContentView: View {
     var amountPerPerson: Double = 0.0
     
     var body: some View {
-        // Title
-        Text("Tip Calculator")
-            .font(.title)
-            .fontWeight(.bold)
-
-            Spacer()
         
-        // Slider Stack
         VStack {
+            // Title
+            Text("Tip Calculator")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .frame(width: 300, height: 100)
             
-            // Bill Amount Slider
-            HStack{
+            // Bill Amount Stack
+            VStack{
                 Text("Bill Amount:")
-                    .frame(width: 120, height: 30)
+                    .fontWeight(.bold)
 
                 Text("\(billAmount, format: .currency(code: "USD"))")
-                    .frame(width: 150, height: 30)
+                    .customSliderTextStyle(fontColor: .purple)
+                
+                Slider(value: $billAmount, in: 0...500, step: 1)
+                    .frame(width: 370, height: 40)
+                    .accentColor(.purple)
             }
             
-            Slider(value: $billAmount, in: 0...500, step: 0.01)
-                .frame(width: 370, height: 50)
-            
-            
-            // Tip Percentage Slider
-            HStack{
+            // Tip Percentage Stack
+            VStack{
                 Text("Tip Percentage:")
-                    .frame(width: 180, height: 30)
+                    .fontWeight(.bold)
 
                 Text("\(tipPercentage, format: .percent)")
-                    .frame(width: 80, height: 30)
+                    .customSliderTextStyle(fontColor: .green)
+                
+                Slider(value: $tipPercentage, in: 0...0.3, step: 0.01)
+                    .frame(width: 370, height: 40)
+                    .accentColor(.green)
             }
-            
-            Slider(value: $tipPercentage, in: 0...30, step: 0.1)
-                .frame(width: 370, height: 50)
+                   
+            // Number of People Stack
+            VStack{
+                Text("Number of People:")
+                    .fontWeight(.bold)
 
-            
-            // Number of People Slider
-
-
-            
+                Text("\(String(format: "%.0f", numberOfPeople))")
+                    .customSliderTextStyle(fontColor: .orange)
+                
+                Slider(value: $numberOfPeople, in: 1...20, step: 1)
+                    .frame(width: 370, height: 40)
+                    .accentColor(.orange)
+            }
+            // Button and Output Stack
+            VStack{
+                Button{
+                    
+                }label: {
+                    Text("Calculate")
+                        .font(.title)
+                    
+                    
+                }
+                .frame(width: 350, height: 60)
+                .foregroundColor(.white)
+                .background(.black)
+                .cornerRadius(15)
+            }
 
         }
-        .padding(.vertical, 300)
+        .padding(.vertical, 190)
+    }
+}
+
+
+
+
+// Custom text style for slider values
+struct CustomSliderTextStyle: ViewModifier {
+    var fontColor: Color
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(fontColor)
+            .fontWeight(.bold)
+            .font(.title)
+    }
+}
+
+extension View {
+    func customSliderTextStyle(fontColor: Color) -> some View {
+        modifier(CustomSliderTextStyle(fontColor: fontColor))
     }
 }
 
