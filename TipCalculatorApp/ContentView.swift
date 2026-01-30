@@ -47,13 +47,13 @@ struct ContentView: View {
             // Tip Percentage Slider
             HStack{
                 Text("Tip Percentage:")
-                    .frame(width: 120, height: 30)
+                    .frame(width: 180, height: 30)
 
-                Text("\(tipPercentage)")
+                Text("\(tipPercentage, format: .percent)")
                     .frame(width: 80, height: 30)
             }
             
-            Slider(value: $tipPercentage, in: 0...30, step: 1.0)
+            Slider(value: $tipPercentage, in: 0...30, step: 0.1)
                 .frame(width: 370, height: 50)
 
             
