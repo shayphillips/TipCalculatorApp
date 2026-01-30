@@ -27,7 +27,12 @@ struct ContentView: View {
             Text("Tip Calculator")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .frame(width: 300, height: 100)
+                .frame(width: 300, height: 40)
+            
+            Image(systemName: "dollarsign.circle.fill")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .padding(.vertical, 20)
             
             // Bill Amount Stack
             VStack{
@@ -70,9 +75,9 @@ struct ContentView: View {
             // Button and Output Stack
             VStack{
                 Button{
-                    
+                    showResults.toggle()
                 }label: {
-                    Text("Calculate")
+                    Text("\(showResults ? "Hide Results" : "Calculate")")
                         .font(.title)
                     
                     
@@ -81,6 +86,16 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .background(.black)
                 .cornerRadius(15)
+            }
+            
+            
+            if showResults{
+                let tipAmount = billAmount * tipPercentage
+                let totalAmount = billAmount + tipAmount
+                let amountPerPerson = totalAmount / numberOfPeople
+                
+                Text("Tip Amount: \(tipAmount, format: .currency(code: "USD")) \nTotalAmount: \(totalAmount, format: .currency(code: "USD")) \nAmount per Person: \(amountPerPerson, format: .currency(code: "USD"))")
+                    .frame(width: 200, height: 120)
             }
 
         }
