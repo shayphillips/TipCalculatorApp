@@ -27,12 +27,11 @@ struct ContentView: View {
             Text("Tip Calculator")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .frame(width: 300, height: 40)
             
             Image(systemName: "dollarsign.circle.fill")
                 .resizable()
                 .frame(width: 80, height: 80)
-                .padding(.vertical, 20)
+                .padding(.vertical, 10)
             
             // Bill Amount Stack
             VStack{
@@ -84,18 +83,30 @@ struct ContentView: View {
                 }
                 .frame(width: 350, height: 60)
                 .foregroundColor(.white)
-                .background(.black)
+                .background(showResults ? .red : .blue)
                 .cornerRadius(15)
+                .padding(.vertical, 20)
+                .shadow(radius: 10)
             }
             
             
+            // Calculate and Display Results
             if showResults{
                 let tipAmount = billAmount * tipPercentage
                 let totalAmount = billAmount + tipAmount
                 let amountPerPerson = totalAmount / numberOfPeople
+                VStack{
+                    Text("Tip Amount: \(tipAmount, format: .currency(code: "USD")) \nTotalAmount: \(totalAmount, format: .currency(code: "USD")) \nAmount per Person: \(amountPerPerson, format: .currency(code: "USD"))")
+                        .frame(width: 250, height: 70)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 10)
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                    
+                }
                 
-                Text("Tip Amount: \(tipAmount, format: .currency(code: "USD")) \nTotalAmount: \(totalAmount, format: .currency(code: "USD")) \nAmount per Person: \(amountPerPerson, format: .currency(code: "USD"))")
-                    .frame(width: 200, height: 120)
+                
             }
 
         }
