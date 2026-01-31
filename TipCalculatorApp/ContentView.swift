@@ -14,6 +14,8 @@ struct ContentView: View {
     @State var tipPercentage: Double = 0.0
     @State var numberOfPeople: Double = 1.0
     @State var showResults: Bool = false
+    
+    @State var currencyType: String = "USD"
 
     // Computed variables
     var tipAmount: Double = 0.0
@@ -28,17 +30,38 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
-            Image(systemName: "dollarsign.circle.fill")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .padding(.vertical, 10)
+            // Currency Type Buttons
+            HStack{
+                Button{
+                    currencyType = "USD"
+                }label: {
+                    Image(systemName: "dollarsign.circle.fill")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 20)
+                }
+                
+                
+                Button{
+                    currencyType = "EUR"
+                }label: {
+                    Image(systemName: "eurosign.circle.fill")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 20)
+                }
+                
+            }
+
             
             // Bill Amount Stack
             VStack{
                 Text("Bill Amount:")
                     .fontWeight(.bold)
 
-                Text("\(billAmount, format: .currency(code: "USD"))")
+                Text("\(billAmount, format: .currency(code: currencyType))")
                     .customSliderTextStyle(fontColor: .purple)
                 
                 Slider(value: $billAmount, in: 0...500, step: 1)
@@ -96,7 +119,7 @@ struct ContentView: View {
                 let totalAmount = billAmount + tipAmount
                 let amountPerPerson = totalAmount / numberOfPeople
                 VStack{
-                    Text("Tip Amount: \(tipAmount, format: .currency(code: "USD")) \nTotalAmount: \(totalAmount, format: .currency(code: "USD")) \nAmount per Person: \(amountPerPerson, format: .currency(code: "USD"))")
+                    Text("Tip Amount: \(tipAmount, format: .currency(code: currencyType)) \nTotal Amount: \(totalAmount, format: .currency(code: currencyType)) \nAmount per Person: \(amountPerPerson, format: .currency(code: currencyType))")
                         .frame(width: 250, height: 70)
                         .padding(.vertical, 20)
                         .padding(.horizontal, 10)
